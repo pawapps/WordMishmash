@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Word Mishmash!</title>
+
+        <link rel="stylesheet" href="/dist/bootstrap-5.0.2-dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="/css/index.css">
+
+        <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
+
+    </head>
+
+    <body>
+
+        <div class="d-flex flex-column justify-content-between" style="min-height:100vh;">
+
+            <div>
+
+                <h1 class="text-center">Word Mishmash!</h1>
+
+                <div id="menu" class="text-center">
+
+                    <svg id="menu-info" role="button" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+
+                    &nbsp;&nbsp;
+
+                    <svg id="menu-settings" role="button" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+                    </svg>
+
+                    &nbsp;&nbsp;
+
+                    <svg id="menu-stats" role="button" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart-line" viewBox="0 0 16 16">
+                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z"/>
+                    </svg>
+
+                </div>
+
+            </div>
+
+            <div id="word-div" class="blurred-edge flex-grow-1"></div>
+
+            <div id="timer-div" class="text-center">
+                Timer: <span id="timer-seconds">0.000</span> seconds
+            </div>
+
+            <div id="button-div" class="d-grid">
+                <button id="game-button" class="btn btn-outline-secondary btn-lg" type="button">Click to start a new game!</button>
+            </div>
+
+        </div>
+
+        <!-- Instructions Modal -->
+        <div class="modal fade" id="instructions-modal" tabindex="-1" aria-labelledby="instructions-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="instructions-modal-label">How to play</h5>
+                        <button id="instructions-modal-x" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p style="font-size:1.2em;">Move letters up or down to find the mishmashed word!</p>
+                        <div class="m-5">
+                            <img src="/images/example.png" class="w-100">
+                        </div>
+                        <hr>
+                        <p>Need support? Send me an <a href="mailto:jason@pwlk.net">email</a>.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Settings Modal -->
+        <div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="settings-modal-label">Settings</h5>
+                        <button id="settings-modal-x" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body no-select">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="align-middle">Word Length</span>
+                                <span class="align-middle">
+                                    <span id="settings-word-length-arrow-left" role="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                        </svg>
+                                    </span>
+                                    <span id="settings-word-length-value" style="font-size:x-large;">5</span>
+                                    <span id="settings-word-length-arrow-right" role="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                        </svg>
+                                    </span>
+                                </span>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="align-middle">Letter Choices</span>
+                                <span class="align-middle">
+                                    <span id="settings-letter-options-arrow-left" role="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                        </svg>
+                                    </span>
+                                    <span id="settings-letter-options-value" style="font-size:x-large;">5</span>
+                                    <span id="settings-letter-options-arrow-right" role="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                        </svg>
+                                    </span>
+                                </span>
+                            </li>
+
+                            <!-- <li class="list-group-item d-grid">
+                                <button class="btn btn-danger" type="button">Reset Game Settings</button>
+                            </li> -->
+
+                            <li class="list-group-item d-grid">
+                                <button id="settings-reset-game-data-button" class="btn btn-danger" type="button">Reset Game Data</button>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="settings-button-save" type="button" class="btn btn-primary">Save and Start New Game</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Stats Modal -->
+        <div class="modal fade" id="stats-modal" tabindex="-1" aria-labelledby="stats-modal-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="stats-modal-label">Game Stats</h5>
+                        <button id="stats-modal-x" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="d-flex flex-row justify-content-evenly">
+
+                            <div class="p-2">
+                                <div id="stats-total-started" class="stats-data">0</div>
+                                <div class="stats-label">Started</div>
+                            </div>
+
+                            <div class="p-2">
+                                <div id="stats-total-percent-solved" class="stats-data">0</div>
+                                <div class="stats-label">% Solved</div>
+                            </div>
+
+                            <div class="p-2">
+                                <div id="stats-streak-current" class="stats-data">0</div>
+                                <div class="stats-label">Current Streak</div>
+                            </div>
+
+                            <div class="p-2">
+                                <div id="stats-streak-best" class="stats-data">0</div>
+                                <div class="stats-label">Longest Streak</div>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+                        <div id="stats-game-message" class="alert alert-secondary d-none" role="alert"></div>
+
+                        <h5>Best Times</h5>
+
+                        <div class="d-flex flex-row justify-content-center">
+                            <div id="stats-best-times"></div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <script src="/js/sw.js"></script>" -->
+        <script src="/dist/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="/dist/jquery-3.6.0-dist/jquery-3.6.0.min.js"></script>
+        <script src="/js/words.js"></script>
+        <script src="/js/index.js"></script>
+
+    </body>
+</html>
