@@ -2,11 +2,7 @@
     --app-height: 100%;
 }
 
-html {
-    height: 100%;
-}
-
-body {
+html, body {
     width:100%;
     overflow: hidden;
     min-height: var(--app-height);
