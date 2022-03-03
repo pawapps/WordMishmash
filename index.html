@@ -2,7 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="viewport" content="viewport-fit=cover, user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 
         <title>Word Mishmash!</title>
 
@@ -31,11 +35,11 @@
 
     <body>
 
-        <div class="d-flex flex-column justify-content-between" style="min-height:100vh;">
+        <div id="column-container" class="d-flex flex-column justify-content-between">
 
             <div>
 
-                <h1 class="text-center">Word Mishmash!</h1>
+                <h1 class="text-center mt-2">Word Mishmash!</h1>
 
                 <div id="menu" class="text-center">
 

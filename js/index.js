@@ -1,5 +1,13 @@
 $( document ).ready(function() {
 
+    const appHeight = () => {
+        console.log(window.innerHeight);
+        const doc = document.documentElement;
+        doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+    }
+    window.addEventListener('resize', appHeight);
+    appHeight();
+
     const LOCALSTORAGE_STATE_KEY = 'wordmishmash-state';
     const LETTER_OPTIONS_MIN = 3;
     const LETTER_OPTIONS_MAX = 7;

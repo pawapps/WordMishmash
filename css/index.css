@@ -1,11 +1,23 @@
+:root {
+    --app-height: 100%;
+}
+
 html {
     height: 100%;
 }
 
 body {
-    min-height:100%;
     width:100%;
     overflow: hidden;
+    min-height: var(--app-height);
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+#column-container {
+    min-height:var(--app-height);
 }
 
 #word-div {
