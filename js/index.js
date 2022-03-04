@@ -1,7 +1,6 @@
 $( document ).ready(function() {
 
     const appHeight = () => {
-        console.log(window.innerHeight);
         const doc = document.documentElement;
         doc.style.setProperty('--app-height', `${window.innerHeight}px`);
     }
@@ -48,30 +47,6 @@ $( document ).ready(function() {
         y: undefined
     }
 
-    $('#settings-word-length-arrow-left').click(() => {
-        const cur_value = Number($('#settings-word-length-value').text());
-        $('#settings-word-length-value').text(cur_value-WORD_LENGTH_STEP);
-        if (cur_value-WORD_LENGTH_STEP == WORD_LENGTH_MIN) $('#settings-word-length-arrow-left').css('visibility', 'hidden');
-        $('#settings-word-length-arrow-right').css('visibility', 'visible');
-    });
-    $('#settings-word-length-arrow-right').click(() => {
-        const cur_value = Number($('#settings-word-length-value').text());
-        $('#settings-word-length-value').text(cur_value+WORD_LENGTH_STEP);
-        if (cur_value+WORD_LENGTH_STEP == WORD_LENGTH_MAX) $('#settings-word-length-arrow-right').css('visibility', 'hidden');
-        $('#settings-word-length-arrow-left').css('visibility', 'visible');
-    });
-    $('#settings-letter-options-arrow-left').click(() => {
-        const cur_value = Number($('#settings-letter-options-value').text());
-        $('#settings-letter-options-value').text(cur_value-LETTER_OPTIONS_STEP);
-        if (cur_value-LETTER_OPTIONS_STEP == LETTER_OPTIONS_MIN) $('#settings-letter-options-arrow-left').css('visibility', 'hidden');
-        $('#settings-letter-options-arrow-right').css('visibility', 'visible');
-    });
-    $('#settings-letter-options-arrow-right').click(() => {
-        const cur_value = Number($('#settings-letter-options-value').text());
-        $('#settings-letter-options-value').text(cur_value+LETTER_OPTIONS_STEP);
-        if (cur_value+LETTER_OPTIONS_STEP == LETTER_OPTIONS_MAX) $('#settings-letter-options-arrow-right').css('visibility', 'hidden');
-        $('#settings-letter-options-arrow-left').css('visibility', 'visible');
-    });
     $('#settings-reset-game-data-button').click(() => {
         if (confirm('Are you sure you want to delete and reset all game data? All scores will be erased.') == true) {
             // Confirmed
@@ -81,10 +56,7 @@ $( document ).ready(function() {
         }
     });
     $('#settings-button-save').click(() => {
-        state.num_letter_options = Number($('#settings-letter-options-value').text());
-        state.num_word_letters = Number($('#settings-word-length-value').text());
         save_state();
-        reset_game();
         $('#settings-modal').modal('hide');
     });
     $('#instructions-modal-x').click(() => { $('#instructions-modal').modal('hide'); });
@@ -95,45 +67,8 @@ $( document ).ready(function() {
     $('#menu-stats').click((e) => { show_game_stats(); });
     $('#game-button').click((e) => {
         if (state.game_status == 'pregame') {
-            // Start the game
-            let solution = get_new_word();
-            // console.log(solution);
-            let mishmashed_word = solution;
-
-            // Don't start with an answer as the mishmashed word
-            while(is_solution(mishmashed_word)) {
-                mishmashed_word = mishmash_word(solution);
-            }
-            const word_matrix = create_word_matrix(mishmashed_word);
-            show_new_word(word_matrix);
-            document.getElementById('game-button').innerText = 'Check word'
-
-            // Set up the game timer
-            game_timer.start = new Date();
-            game_timer.timer = setInterval(() => {
-                const delta = ((new Date()) - game_timer.start) / 1000;
-                document.getElementById('timer-seconds').innerText = delta.toFixed(3);
-            }, 21);
-
-            // Init stats
-            if (state.stats.game_count.length[state.num_word_letters] === undefined) {
-                state.stats.game_count.length[state.num_word_letters] = {};
-                state.stats.best.length[state.num_word_letters] = {};
-            }
-            if (state.stats.game_count.length[state.num_word_letters][state.num_letter_options] === undefined) {
-                state.stats.game_count.length[state.num_word_letters][state.num_letter_options] = {
-                    started: 0,
-                    solved: 0
-                };
-                state.stats.best.length[state.num_word_letters][state.num_letter_options] = undefined;
-            }
-            state.stats.game_count.length[state.num_word_letters][state.num_letter_options].started += 1;
-            state.stats.game_count.total.started += 1;
-
-            state.game_status = 'ingame';
-            save_state();
-
-            return;
+            
+            show_game_stats();
         }
 
         if (state.game_status == 'ingame') {
@@ -163,12 +98,14 @@ $( document ).ready(function() {
                 animate_tiles(get_active_tiles(), 'wobble', 1.5, 100);
                 document.getElementById('selector').style.backgroundColor = 'var(--bs-success)';
 
-                document.getElementById('game-button').innerText = 'Click to start a new game!';
+                document.getElementById('game-button').disabled = true;
+                document.getElementById('game-button').innerText = 'Click to select a game!';
                 state.game_status = 'pregame';
                 save_state();
 
                 setTimeout(function() {
                     show_game_stats({highscore: highscore, time: delta});
+                    document.getElementById('game-button').disabled = false;
                 }, 1500 + 100*state.num_word_letters);
 
                 return;
@@ -182,13 +119,57 @@ $( document ).ready(function() {
         }
     });
 
+    const start_game = function() {
+        // Start the game
+        let solution = get_new_word();
+        // console.log(solution);
+        let mishmashed_word = solution;
+        let word_matrix = undefined;
+
+        // Don't start with an answer as the mishmashed word
+        while(is_solution(mishmashed_word)) {
+            mishmashed_word = mishmash_word(solution);
+            word_matrix = create_word_matrix(mishmashed_word);
+            mishmashed_word = word_matrix[Math.floor(word_matrix.length / 2)].join('');
+        }
+        show_new_word(word_matrix);
+        document.getElementById('game-button').innerText = 'Check word'
+
+        // Set up the game timer
+        game_timer.start = new Date();
+        game_timer.timer = setInterval(() => {
+            const delta = ((new Date()) - game_timer.start) / 1000;
+            document.getElementById('timer-seconds').innerText = delta.toFixed(3);
+        }, 21);
+
+        // Init stats
+        if (state.stats.game_count.length[state.num_word_letters] === undefined) {
+            state.stats.game_count.length[state.num_word_letters] = {};
+            state.stats.best.length[state.num_word_letters] = {};
+        }
+        if (state.stats.game_count.length[state.num_word_letters][state.num_letter_options] === undefined) {
+            state.stats.game_count.length[state.num_word_letters][state.num_letter_options] = {
+                started: 0,
+                solved: 0
+            };
+            state.stats.best.length[state.num_word_letters][state.num_letter_options] = undefined;
+        }
+        state.stats.game_count.length[state.num_word_letters][state.num_letter_options].started += 1;
+        state.stats.game_count.total.started += 1;
+
+        state.game_status = 'ingame';
+        save_state();
+
+        return;
+    }
+
     const show_info = function() {
         $('#instructions-modal').modal('show');
     }
 
     const show_game_stats = function(cur_game=undefined) {
         
-
+        console.log('hi');
         $('#stats-total-started').text(state.stats.game_count.total.started);
         const perc_solved = 100*(state.stats.game_count.total.solved / state.stats.game_count.total.started);
         $('#stats-total-percent-solved').text((isNaN(perc_solved) ? 0 : perc_solved.toFixed(0)));
@@ -224,8 +205,8 @@ $( document ).ready(function() {
 
                     let header_box = document.createElement('div');
                     header_box.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center');
-                    header_box.style.height = ''+ (calc_letter_div_height()+calc_letter_div_margin()) +'px';
-                    header_box.style.width = ''+ (calc_letter_div_width()+calc_letter_div_margin()) +'px';
+                    header_box.style.height = ''+ (1.3*(calc_letter_div_height()+calc_letter_div_margin())) +'px';
+                    header_box.style.width = ''+ (1.3*(calc_letter_div_width()+calc_letter_div_margin())) +'px';
                     header_box.style.margin = ''+ calc_letter_div_margin() +'px';
                     
                     let header_data = document.createElement('div');
@@ -258,8 +239,9 @@ $( document ).ready(function() {
 
                 let stat_box = document.createElement('div');
                 stat_box.classList.add('letter-picker-letter', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center');
-                stat_box.style.height = ''+ (calc_letter_div_height()+calc_letter_div_margin()) +'px';
-                stat_box.style.width = ''+ (calc_letter_div_width()+calc_letter_div_margin()) +'px';
+                stat_box.setAttribute('role', 'button');
+                stat_box.style.height = ''+ (1.3*(calc_letter_div_height()+calc_letter_div_margin())) +'px';
+                stat_box.style.width = ''+ (1.3*(calc_letter_div_width()+calc_letter_div_margin())) +'px';
                 stat_box.style.margin = ''+ calc_letter_div_margin() +'px';
                 stat_box.style.boxShadow = 'none';
 
@@ -268,15 +250,34 @@ $( document ).ready(function() {
                     stat_box.style.border = '4px double';
                     if (cur_game != undefined && cur_game.highscore == true) {
                         // New High Score
-                        console.log('settings high score format');
                         stat_box.style.borderColor = 'var(--bs-success)';
                         animate_tiles([stat_box], 'pulse', 1.5, 0, true);
                     }
                 }
 
+                $(stat_box).click((e) => {
+                    if (state.game_status == 'ingame') {
+                        if (confirm('A game is in progress, do you really want to start a new game?') != true) {
+                            return;
+                        }
+                    }
+                    state.num_letter_options = i;
+                    state.num_word_letters = j;
+                    save_state();
+                    reset_game();
+                    $('#stats-modal').modal('hide');
+                    start_game();
+                });
+                $(stat_box).mouseenter((e) => {
+                    stat_box.style.backgroundColor = 'var(--bs-light)';
+                });
+                $(stat_box).mouseleave((e) => {
+                    stat_box.style.backgroundColor = 'var(--bs-white)';
+                });
+
                 let stat_data = document.createElement('div');
                 stat_data.classList.add('stats-data');
-                stat_data.style.fontSize = ''+ (calc_scale()*1) +'em';
+                stat_data.style.fontSize = ''+ (calc_scale()*1.3) +'em';
                 
                 stat_data.innerText = ''+ (best_time == undefined ? '-' : best_time);
 
@@ -288,11 +289,22 @@ $( document ).ready(function() {
                 stat_label.innerText = 'seconds';
                 stat_box.appendChild(stat_label);
 
+                let solved_label = document.createElement('div');
+                solved_label.classList.add('stats-label', 'mt-1', 'pt-1', 'border-top');
+                solved_label.style.color = 'var(--bs-dark)';
+
+                let solved_count = 0;
+                try {
+                    solved_count = state.stats.game_count.length[j][i].solved;
+                } catch(e) {}
+                solved_label.innerText = 'Solved: '+ solved_count;
+                stat_box.appendChild(solved_label);
+
                 row.appendChild(stat_box);
             }
 
             stats_table.appendChild(row);
-            stats_table.style.marginLeft = '-'+ (calc_letter_div_width()+calc_letter_div_margin()) +'px';
+            stats_table.style.marginLeft = '-'+ (.6*(calc_letter_div_width()+calc_letter_div_margin())) +'px';
             
         }
 
@@ -300,17 +312,6 @@ $( document ).ready(function() {
     }
 
     const show_settings = function() {
-        $('#settings-word-length-value').text(state.num_word_letters);
-        if (state.num_word_letters == WORD_LENGTH_MIN) $('#settings-word-length-arrow-left').css('visibility', 'hidden');
-        else $('#settings-word-length-arrow-left').css('visibility', 'visible');
-        if (state.num_word_letters == WORD_LENGTH_MAX) $('#settings-word-length-arrow-right').css('visibility', 'hidden');
-        else $('#settings-word-length-arrow-right').css('visibility', 'visible');
-
-        $('#settings-letter-options-value').text(state.num_letter_options);
-        if (state.num_letter_options == LETTER_OPTIONS_MIN) $('#settings-letter-options-arrow-left').css('visibility', 'hidden');
-        else $('#settings-letter-options-arrow-left').css('visibility', 'visible');
-        if (state.num_letter_options == LETTER_OPTIONS_MAX) $('#settings-letter-options-arrow-right').css('visibility', 'hidden');
-        else $('#settings-letter-options-arrow-right').css('visibility', 'visible');
 
         $('#settings-modal').modal('show');
     }
@@ -338,7 +339,7 @@ $( document ).ready(function() {
             clearInterval(game_timer.timer);
         }
         $('#timer-seconds').text('0.000');
-        $('#game-button').text('Click to start a new game!');
+        $('#game-button').text('Click to select game!');
         init(true);
     }
 
@@ -369,11 +370,11 @@ $( document ).ready(function() {
     }
 
     const calc_letter_div_height = function() {
-        return calc_scale()*70;
+        return calc_scale()*65;
     }
 
     const calc_letter_div_width = function() {
-        return calc_scale()*70;
+        return calc_scale()*65;
     }
 
     const calc_letter_div_margin = function() {
