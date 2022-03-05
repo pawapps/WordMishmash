@@ -48,6 +48,7 @@ $( document ).ready(function() {
     }
 
     $('#settings-reset-game-data-button').click(() => {
+        gtag('event', 'click', 'settings-reset-game-data-button');
         if (confirm('Are you sure you want to delete and reset all game data? All scores will be erased.') == true) {
             // Confirmed
             localStorage.removeItem(LOCALSTORAGE_STATE_KEY);
@@ -56,22 +57,25 @@ $( document ).ready(function() {
         }
     });
     $('#settings-button-save').click(() => {
+        gtag('event', 'click', 'settings-button-save');
         save_state();
         $('#settings-modal').modal('hide');
     });
-    $('#instructions-modal-x').click(() => { $('#instructions-modal').modal('hide'); });
-    $('#menu-info').click((e) => { show_info(); });
-    $('#settings-modal-x').click((e) => { $('#settings-modal').modal('hide'); });
-    $('#menu-settings').click((e) => { show_settings(); });
-    $('#stats-modal-x').click((e) => { $('#stats-modal').modal('hide'); });
-    $('#menu-stats').click((e) => { show_game_stats(); });
+    $('#instructions-modal-x').click(() => { gtag('event', 'click', 'instructions-modal-x'); $('#instructions-modal').modal('hide'); });
+    $('#menu-info').click((e) => { gtag('event', 'click', 'menu-info'); show_info(); });
+    $('#settings-modal-x').click((e) => { gtag('event', 'click', 'settings-modal-x'); $('#settings-modal').modal('hide'); });
+    $('#menu-settings').click((e) => { gtag('event', 'click', 'menu-settings'); show_settings(); });
+    $('#stats-modal-x').click((e) => { gtag('event', 'click', 'stats-modal-x'); $('#stats-modal').modal('hide'); });
+    $('#menu-stats').click((e) => { gtag('event', 'click', 'menu-stats'); show_game_stats(); });
     $('#game-button').click((e) => {
         if (state.game_status == 'pregame') {
             
+            gtag('event', 'click', 'select game');
             show_game_stats();
         }
 
         if (state.game_status == 'ingame') {
+            gtag('event', 'click', 'check-word', {word: get_active_word()});
             // Check the word
             if (is_solution(get_active_word())) {
                 // Success, game over
@@ -93,6 +97,11 @@ $( document ).ready(function() {
                 state.stats.best.streak.current += 1;
                 if (state.stats.best.streak.current > state.stats.best.streak.best) state.stats.best.streak.best = state.stats.best.streak.current;
 
+                gtag('event', 'solved', {
+                    word: get_active_word(),
+                    time: delta,
+                    state: state
+                });
                 // Graphic Updates
                 console.log('Congrats! '+ delta +' seconds');
                 animate_tiles(get_active_tiles(), 'wobble', 1.5, 100);
@@ -135,6 +144,12 @@ $( document ).ready(function() {
         show_new_word(word_matrix);
         document.getElementById('game-button').innerText = 'Check word'
 
+        gtag('event', 'start', {
+            word: solution,
+            mishmashed: mishmashed_word,
+            state: state
+        });
+
         // Set up the game timer
         game_timer.start = new Date();
         game_timer.timer = setInterval(() => {
@@ -169,7 +184,6 @@ $( document ).ready(function() {
 
     const show_game_stats = function(cur_game=undefined) {
         
-        console.log('hi');
         $('#stats-total-started').text(state.stats.game_count.total.started);
         const perc_solved = 100*(state.stats.game_count.total.solved / state.stats.game_count.total.started);
         $('#stats-total-percent-solved').text((isNaN(perc_solved) ? 0 : perc_solved.toFixed(0)));
