@@ -10,7 +10,7 @@ if('serviceWorker' in navigator) {
     });
 }
 
-let cache_name = 'WordMishmash-v1.0.0';
+let cache_name = 'WordMishmash-v1.0.1';
 let urls_to_cache = [
     '/index.html',
     '/css/index.css',
