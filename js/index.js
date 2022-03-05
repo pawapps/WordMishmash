@@ -15,7 +15,7 @@ $( document ).ready(function() {
     const WORD_LENGTH_MAX = 5;
     const WORD_LENGTH_STEP = 1;
     const DEFAULT_STATE = {
-        v: '1.0.0',
+        v: VERSION,
         num_letter_options: 3,
         num_word_letters: 4,
         stats: {
@@ -327,6 +327,7 @@ $( document ).ready(function() {
 
     const show_settings = function() {
 
+        $('#settings-version').text(VERSION);
         $('#settings-modal').modal('show');
     }
 

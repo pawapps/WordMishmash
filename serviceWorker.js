@@ -9,8 +9,8 @@ if('serviceWorker' in navigator) {
             });
     });
 }
-
-let cache_name = 'WordMishmash-v1.0.1';
+var VERSION = '1.0.1';
+let cache_name = 'WordMishmash-v'+ VERSION;
 let urls_to_cache = [
     '/index.html',
     '/css/index.css',
