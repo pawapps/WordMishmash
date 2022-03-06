@@ -489,7 +489,7 @@ $( document ).ready(function() {
             const cur_offset = selector_top - this.offsetTop;
             const letter_div_height_with_margin = calc_letter_div_height() + calc_letter_div_margin();
             const new_offset = Math.round(cur_offset/letter_div_height_with_margin)*letter_div_height_with_margin;
-            const option_index = Math.floor((new_offset + (letter_div_height_with_margin*Math.floor(state.num_letter_options/2))) / letter_div_height_with_margin);
+            const option_index = Math.round((new_offset + (letter_div_height_with_margin*Math.floor(state.num_letter_options/2))) / letter_div_height_with_margin);
             active_tiles.push(this.getElementsByClassName('letter-picker-letter')[option_index]);
         });
 

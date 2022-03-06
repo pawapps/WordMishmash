@@ -9,7 +9,7 @@ if('serviceWorker' in navigator) {
             });
     });
 }
-var VERSION = '1.0.1';
+var VERSION = '1.0.2';
 let cache_name = 'WordMishmash-v'+ VERSION;
 let urls_to_cache = [
     '/index.html',
