@@ -48,7 +48,7 @@ $( document ).ready(function() {
     }
 
     $('#settings-reset-game-data-button').click(() => {
-        gtag('event', 'click', 'settings-reset-game-data-button');
+        gtag('event', 'click', {action: 'settings-reset-game-data-button'});
         if (confirm('Are you sure you want to delete and reset all game data? All scores will be erased.') == true) {
             // Confirmed
             localStorage.removeItem(LOCALSTORAGE_STATE_KEY);
@@ -57,25 +57,25 @@ $( document ).ready(function() {
         }
     });
     $('#settings-button-save').click(() => {
-        gtag('event', 'click', 'settings-button-save');
+        gtag('event', 'click', {action: 'settings-button-save'});
         save_state();
         $('#settings-modal').modal('hide');
     });
-    $('#instructions-modal-x').click(() => { gtag('event', 'click', 'instructions-modal-x'); $('#instructions-modal').modal('hide'); });
-    $('#menu-info').click((e) => { gtag('event', 'click', 'menu-info'); show_info(); });
-    $('#settings-modal-x').click((e) => { gtag('event', 'click', 'settings-modal-x'); $('#settings-modal').modal('hide'); });
-    $('#menu-settings').click((e) => { gtag('event', 'click', 'menu-settings'); show_settings(); });
-    $('#stats-modal-x').click((e) => { gtag('event', 'click', 'stats-modal-x'); $('#stats-modal').modal('hide'); });
-    $('#menu-stats').click((e) => { gtag('event', 'click', 'menu-stats'); show_game_stats(); });
+    $('#instructions-modal-x').click(() => { gtag('event', 'click', {action: 'instructions-modal-x'}); $('#instructions-modal').modal('hide'); });
+    $('#menu-info').click((e) => { gtag('event', 'click', {action: 'menu-info'}); show_info(); });
+    $('#settings-modal-x').click((e) => { gtag('event', 'click', {action: 'settings-modal-x'}); $('#settings-modal').modal('hide'); });
+    $('#menu-settings').click((e) => { gtag('event', 'click', {action: 'menu-settings'}); show_settings(); });
+    $('#stats-modal-x').click((e) => { gtag('event', 'click', {action: 'stats-modal-x'}); $('#stats-modal').modal('hide'); });
+    $('#menu-stats').click((e) => { gtag('event', 'click', {action: 'menu-stats'}); show_game_stats(); });
     $('#game-button').click((e) => {
         if (state.game_status == 'pregame') {
             
-            gtag('event', 'click', 'select game');
+            gtag('event', 'click', {action: 'select game'});
             show_game_stats();
         }
 
         if (state.game_status == 'ingame') {
-            gtag('event', 'click', 'check-word', {word: get_active_word()});
+            gtag('event', 'click', {action: 'check-word'}, {word: get_active_word()});
             // Check the word
             if (is_solution(get_active_word())) {
                 // Success, game over
@@ -100,7 +100,8 @@ $( document ).ready(function() {
                 gtag('event', 'solved', {
                     word: get_active_word(),
                     time: delta,
-                    state: state
+                    games_started: state.stats.game_count.total.started,
+                    games_solved: state.stats.game_count.total.solved
                 });
                 // Graphic Updates
                 console.log('Congrats! '+ delta +' seconds');
@@ -147,7 +148,8 @@ $( document ).ready(function() {
         gtag('event', 'start', {
             word: solution,
             mishmashed: mishmashed_word,
-            state: state
+            games_started: state.stats.game_count.total.started,
+            games_solved: state.stats.game_count.total.solved
         });
 
         // Set up the game timer
